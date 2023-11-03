@@ -1,0 +1,13 @@
+[Cliente] ---> [API Gateway] ---> [Servicio de Suma/Resta/Multiplicación/División/etc.]
+                    |
+                    V
+              [Servicio de Historial]
+                    |
+                    V
+              [Servicio de Autenticación] ---> [Base de Datos de Usuarios]
+                    |
+                    V
+              [Servicio de Sesión]
+                    |
+                    V
+              [Servicio de Notificaciones] ---> [Servicios de Mensajería/Correo]

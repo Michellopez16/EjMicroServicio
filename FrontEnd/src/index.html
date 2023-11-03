@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Microservicios</title>
+</head>
+<body>
+    <h1>Calculadora</h1>
+    <form id="calculator-form">
+        <input type="number" id="operand1" placeholder="Operand 1" required />
+        <select id="operation">
+            <option value="suma">+</option>
+            <option value="resta">-</option>
+            <option value="multiplica">*</option>
+            <option value="divide">/</option>
+        </select>
+        <input type="number" id="operand2" placeholder="Operand 2" required />
+        <button type="submit">Calcular</button>
+    </form>
+    <h2>Resultado: <span id="result">?</span></h2>
+
+    <script>
+        document.getElementById('calculator-form').onsubmit = async function(event) {
+            event.preventDefault();
+
+            // Obteniendo los valores del formulario
+            let operand1 = document.getElementById('operand1').value;
+            let operand2 = document.getElementById('operand2').value;
+            let operation = document.getElementById('operation').value;
+
+            // Configuración de la petición POST
+            let requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ "a": operand1, "b": operand2 }),
+            };
+
+            // Realizando la petición al API Gateway
+            try {
+                let response = await fetch(`http://gateway_service:8000/${operation}`, requestOptions);
+                if (response.ok) {
+                    let result = await response.json();
+                    document.getElementById('result').textContent = result.result;
+                } else {
+                    console.error('Error en la petición:', response.status);
+                    document.getElementById('result').textContent = 'Error';
+                }
+            } catch (error) {
+                console.error('Error en la conexión:', error);
+                document.getElementById('result').textContent = 'Error';
+            }
+        };
+    </script>
+</body>
+</html>

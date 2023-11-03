@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  suma_service:
+    build: ./Suma-service
+    ports:
+      - "8001:8001"
+    networks:
+      - calculadora-net
+
+  resta_service:
+    build: ./Resta-service
+    ports:
+      - "8002:8002"
+    networks:
+      - calculadora-net
+
+  multiplica_service:
+    build: ./Multiplica-service
+    ports:
+      - "8003:8003"
+    networks:
+      - calculadora-net
+
+  divide_service:
+    build: ./Divide-service
+    ports:
+      - "8004:8004"
+    networks:
+      - calculadora-net
+
+  gateway_service:
+    build: ./Api_gateway_service
+    ports:
+      - "8000:8000"
+    networks:
+      - calculadora-net
+    depends_on:
+      - suma_service
+      - resta_service
+      - multiplica_service
+      - divide_service
+  
+  frontend:
+    build: ./FrontEnd
+    ports:
+      - "80:80"
+    networks:
+      - calculadora-net
+    depends_on:
+      - gateway_service
+      
+networks:
+  calculadora-net:
+    driver: bridge

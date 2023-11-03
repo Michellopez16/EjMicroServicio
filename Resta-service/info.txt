@@ -1,0 +1,7 @@
+
+
+docker run -d --name nombre_del_servicio-service -p puerto_host:80 nombre_del_servicio-service
+
+docker build -t resta_service:v1 .
+docker run -d -p 8002:8002 resta_service:v1
+

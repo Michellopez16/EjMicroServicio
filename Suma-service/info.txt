@@ -1,0 +1,10 @@
+
+
+docker run -d --name nombre_del_servicio-service -p puerto_host:80 nombre_del_servicio-service
+
+docker build -t suma_service:v1 .
+
+docker run -d -p 8001:8001 suma_service:v1
+
+
+docker run -d --name suma-service -p 8001:8001 suma_service:v1
