@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, HTTPException
 import httpx
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -10,6 +11,15 @@ SERVICES = {
     "multiplica": "http://multiplica_service:8003/multiplica",
     "divide": "http://divide_service:8004/divide"
 }
+
+# Configurar CORS para este servicio
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/{service_name}")
 async def perform_operation(service_name: str, request: Request):

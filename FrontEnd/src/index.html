@@ -33,15 +33,16 @@
             let requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ "a": operand1, "b": operand2 }),
+                body: JSON.stringify({ a: operand1, b: operand2 }),
             };
 
             // Realizando la petición al API Gateway
             try {
-                let response = await fetch(`http://gateway_service:8000/${operation}`, requestOptions);
+                let response = await fetch(`http://localhost:8000/${operation}`, requestOptions);
                 if (response.ok) {
                     let result = await response.json();
-                    document.getElementById('result').textContent = result.result;
+                    document.getElementById('result').textContent = result["resultado"];
+                    console.log(result);
                 } else {
                     console.error('Error en la petición:', response.status);
                     document.getElementById('result').textContent = 'Error';
